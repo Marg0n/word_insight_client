@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { GoPerson } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import 'react-tooltip/dist/react-tooltip.css';
 import useAuth from './../hooks/useAuth';
@@ -14,6 +14,22 @@ const Navbar = () => {
   // State to track whether the dropdown is open or closed
   const [dropdown, setDropdown] = useState(false);
 
+  const menuList = <>
+    <li><NavLink to='/'>Home</NavLink></li>
+    <li><NavLink to='/allBlogs'>All blogs</NavLink></li>
+    {
+      user && <>
+        <li><NavLink to='/addBlogs'>Add Blog</NavLink></li>
+        <li><NavLink to='/features'>Featured Blogs</NavLink></li>
+        <li><NavLink to='/wishlist'>Wishlist</NavLink> </li>
+      </>
+    }
+    {
+      !user && <>
+        <li><NavLink to='/registration'>Register</NavLink></li>
+      </>
+    }
+  </>
 
   const list = <>
     <li>
@@ -32,7 +48,7 @@ const Navbar = () => {
       className="rounded-xl p-2 m-2 text-right"
       onClick={loggedOut}
     >
-      <button className='bg-gray-300 hover:bg-neutral hover:text-white block text-center'>Logout</button>
+      <button className='bg-base-300 hover:bg-neutral hover:text-white block text-center'>Logout</button>
     </li>
   </>
 
@@ -62,6 +78,19 @@ const Navbar = () => {
   return (
     <div className='navbar bg-base-100 shadow-2xl container px-4 mx-auto my-4 rounded-lg font-serif'>
 
+      {/* burger menu */}
+      <div className="">
+        <div className="dropdown">
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+          </div>
+          <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+            {menuList}
+          </ul>
+        </div>
+      </div>
+
+      {/* logo and website name */}
       <div className='flex-1'>
         <Link to="/" className='flex gap-2 items-center'>
           <img className='w-auto h-7 rounded' src={logo} alt='' />
@@ -69,20 +98,16 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div className='flex-none mr-4'>
-        <ul className='menu menu-horizontal px-1'>
-          <li>
-            <Link to='/'>Home</Link>
-          </li>
-
-          {/* <li>
-              <div>Login</div>
-          </li> */}
-
+      {/* nav menu */}
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal  px-1 space-x-2">
+          {menuList}
         </ul>
+      </div>
 
+      <div className='flex-1 navbar-end'>
 
-
+        {/* login */}
         <div className='z-50'>
           {
             user ?
@@ -112,7 +137,7 @@ const Navbar = () => {
                 {dropdown && (
                   <ul
                     tabIndex={0}
-                    className="mt-3 z-[2] p-2 shadow-2xl menu menu-sm dropdown-content bg-gray-100 rounded-box w-64">
+                    className="mt-3 z-[2] p-2 shadow-2xl menu menu-sm dropdown-content bg-base-100 rounded-box w-64">
                     <li >
                       <p className="flex justify-center items-center">
                         Hi, <span className=" text-blue-500 font-serif">
@@ -139,8 +164,8 @@ const Navbar = () => {
 
         </div>
 
+        {/* Theme changer */}
         <div>
-          {/* Theme changer */}
           <label className="ml-4 swap swap-rotate">
 
             {/* this hidden checkbox controls the state */}
@@ -160,7 +185,7 @@ const Navbar = () => {
         </div>
 
       </div>
-    </div>
+    </div >
   )
 }
 
