@@ -9,8 +9,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/thumbs';
 import { Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules';
 // import { PropTypes } from 'prop-types';
-import { useTypewriter, Cursor } from 'react-simple-typewriter'
-import { AttentionSeeker } from "react-awesome-reveal";
 import SlideComponents from './SlideComponents';
 
 
@@ -19,30 +17,9 @@ const Slider = () => {
     // const Slider = ({ showSliders }) => {
 
 
-    // console.log('southeastAsia', showSliders)
-
-    const [typeEffect] = useTypewriter({
-        words: ['Some Awesome Skilled People!', 'New Work!', 'New Talents!'],
-        loop: {},
-        typeSpeed: 100,
-        deleteSpeed: 40,
-    })
-
-
     return (
         <>
-            <AttentionSeeker effect='flash' >
-                <h1 className='text-3xl font-bold text-center my-10 uppercase'>
-                    You can find{' '}
-                    <span className='text-rose-500'>{typeEffect}</span>
-
-                    <span className=''>
-                        <Cursor cursorStyle='🖋️' cursorBlinking={false} />
-                    </span>
-
-                </h1>
-            </AttentionSeeker>
-
+            
             <Swiper
                 style={{
                     '--swiper-navigation-color': '#fff',
@@ -52,7 +29,7 @@ const Slider = () => {
                     dynamicBullets: true,
                     clickable: true,
                 }}
-                // slidesPerView={3}
+                slidesPerView={3}
                 spaceBetween={30}
                 centeredSlides={true}
                 autoplay={{
@@ -101,6 +78,16 @@ const Slider = () => {
                     <SlideComponents 
                     image='https://i.ibb.co/vPx6XgP/Chicken-Curry.jpg'
                     text='Get your Graphics Design projects done skillfully!'/>
+                </SwiperSlide>
+                <SwiperSlide  >
+                    <SlideComponents 
+                    image='https://i.ibb.co/vPx6XgP/Chicken-Curry.jpg'
+                    text='Get your Digital marketing up and running!'/>
+                </SwiperSlide>
+                <SwiperSlide  >
+                    <SlideComponents 
+                    image='https://i.ibb.co/vPx6XgP/Chicken-Curry.jpg'
+                    text='Get your Digital marketing up and running!'/>
                 </SwiperSlide>
                 <SwiperSlide  >
                     <SlideComponents 

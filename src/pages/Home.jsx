@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import Loader from "../components/Loader";
 import Slider from "../components/Slider";
 // import logo from '/wordInsight_logo.jpeg';
+import { useTypewriter, Cursor } from 'react-simple-typewriter'
+import { AttentionSeeker } from "react-awesome-reveal";
 
 
 
@@ -19,6 +21,13 @@ const Home = () => {
         return () => clearTimeout(timer);
     }, []);
 
+    const [typeEffect] = useTypewriter({
+        words: ['Some Awesome Story!', 'About Your New Work!', 'About New Discoveries!', 'Whatever you think!'],
+        loop: {},
+        typeSpeed: 100,
+        deleteSpeed: 40,
+    })
+
     if (loading) {
         return <Loader />
     }
@@ -28,9 +37,18 @@ const Home = () => {
             <Helmet>
                 <title>Word Insight | Home</title>
             </Helmet>
-            <div className='h-[calc(dvh-240px)] my-4'>
-                <Slider />
-            </div>
+
+            <AttentionSeeker effect='flash' >
+                <h1 className='text-3xl font-bold text-center my-10 uppercase'>
+                    You can find, read or write{' '}
+                    <span className='text-rose-500'>{typeEffect}</span>
+
+                    <span className=''>
+                        <Cursor cursorStyle='🖋️' cursorBlinking={false} />
+                    </span>
+
+                </h1>
+            </AttentionSeeker>
 
             <div className="my-16">
                 <div className="text-center my-6 space-y-4">
@@ -40,6 +58,9 @@ const Home = () => {
                     <p className="text-base">Choose you choice from our available categories!</p>
                 </div>
 
+            <div className='h-[calc(dvh-380px)] my-4'>
+                <Slider />
+            </div>
                 
             </div>
         </div>

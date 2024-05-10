@@ -67,7 +67,7 @@ const Footer = () => {
 
         <div className='flex flex-col items-center sm:flex-row sm:justify-between'>
           <p className='text-sm text-gray-500 '>
-            © Copyright 2021. All Rights Reserved.
+            © Copyright 2024. All Rights Reserved by Word Insight.
           </p>
 
           <div className='flex -mx-2'>

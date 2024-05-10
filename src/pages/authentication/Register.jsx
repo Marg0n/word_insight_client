@@ -39,10 +39,19 @@ const Registration = () => {
   const onSubmit = (data) => {
     const { email, password, name, photoURL } = data;
 
-    if (!/^(?=.*[a-z])(?=.*[A-Z]).{6,}$/.test(password)) {
+    
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()[\]{}|\\;:'",.<>/?~])(?=.{6,})/.test(password)) {
+      
       // console.log(watch('password'))
-      return toast.error("Password must contain an Uppercase, a Lowercase and Length must be at least 6", { autoClose: 3000, theme: "colored" })
-    }
+      return toast.error(
+        `Password must contain 
+        an Uppercase, 
+        a Lowercase, 
+        a numeric character, 
+        a special character 
+        and Length must be at least 6 characters long!`,
+         { autoClose: 4000, theme: "colored" })
+    } 
 
     // create user profile and update user
     createUser(email, password)
@@ -149,7 +158,7 @@ const Registration = () => {
             </div>
 
             <span className='w-5/6 px-4 py-3 font-bold text-center'>
-              Sign in with Google
+              Log in with Google
             </span>
           </div>
 
@@ -161,7 +170,7 @@ const Registration = () => {
             </div>
 
             <span className='w-5/6 px-4 py-3 font-bold text-center'>
-              Sign in with GitHub
+              Log in with GitHub
             </span>
           </div>
 
@@ -252,7 +261,7 @@ const Registration = () => {
               />
               <span
                 onClick={() => setPassShow(!passShow)}
-                className="cursor-pointer absolute top-10 right-4"
+                className="cursor-pointer absolute top-10 right-4 text-black"
               >
                 {
                   passShow ? <TfiEye /> : <RxEyeClosed />
@@ -267,7 +276,7 @@ const Registration = () => {
                 type='submit'
                 className='w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50'
               >
-                Sign Up
+                Register
               </button>
             </div>
           </form>
@@ -279,7 +288,7 @@ const Registration = () => {
               to='/login'
               className='text-xs text-rose-700 uppercase  hover:underline font-semibold animate-pulse'
             >
-              sign in
+              Log In
             </Link>
 
             <span className='w-1/5 border-b dark:border-gray-400 md:w-1/4'></span>
