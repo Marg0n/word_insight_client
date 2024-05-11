@@ -4,7 +4,7 @@ A Blog based website.
 
 Live site:
 
-- [Live Site]()
+- [Live Site](https://worldinsight.netlify.app/)
 
 
 Resources:
