@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import Loader from "../components/Loader";
 import Slider from "../components/Slider";
 // import logo from '/wordInsight_logo.jpeg';
-import { useTypewriter, Cursor } from 'react-simple-typewriter'
+import { useTypewriter, Cursor } from 'react-simple-typewriter';
 import { AttentionSeeker } from "react-awesome-reveal";
 
 

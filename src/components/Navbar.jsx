@@ -17,10 +17,10 @@ const Navbar = () => {
   const menuList = <>
     <li><NavLink to='/'>Home</NavLink></li>
     <li><NavLink to='/allBlogs'>All blogs</NavLink></li>
+    <li><NavLink to='/featured'>Featured Blogs</NavLink></li>
     {
       user && <>
-        <li><NavLink to='/addBlogs'>Add Blog</NavLink></li>
-        <li><NavLink to='/features'>Featured Blogs</NavLink></li>
+        <li><NavLink to='/addBlog'>Add Blog</NavLink></li>
         <li><NavLink to='/wishlist'>Wishlist</NavLink> </li>
       </>
     }
@@ -32,17 +32,17 @@ const Navbar = () => {
   </>
 
   const list = <>
-    <li>
+    {/* <li>
       <div className='justify-between'>Add Job</div>
+    </li> */}
+    <li>
+      <Link to='/addBlog'>Add Blog</Link>
     </li>
     <li>
-      <div>My Posted Jobs</div>
+      <Link to='/myBlogs'>My Blog</Link>
     </li>
     <li>
-      <div>My Bids</div>
-    </li>
-    <li>
-      <div>Bid Requests</div>
+      <Link to='/wishlist'>Wishlist</Link>
     </li>
     <li
       className="rounded-xl p-2 m-2 text-right"
