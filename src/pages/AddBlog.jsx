@@ -74,12 +74,12 @@ const AddBlog = () => {
 
                     <label className="input input-bordered flex items-center gap-2">
                         User Name
-                        <input type="text" className="grow  text-primary" placeholder="Tony Stark" name="name" defaultValue={user?.displayName || ""} />
+                        <input type="text" className="grow  text-primary" placeholder="Tony Stark" name="name" defaultValue={user?.displayName || ""} required/>
                     </label>
 
                     <label className="input input-bordered flex items-center gap-2">
                         User Email
-                        <input type="email" className="grow text-primary" placeholder="email@site.com" name="email" defaultValue={user?.email || ''} />
+                        <input type="email" className="grow text-primary" placeholder="email@site.com" name="email" defaultValue={user?.email || ''} required/>
                     </label>
 
                     <label className="form-control w-full ">

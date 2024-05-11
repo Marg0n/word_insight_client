@@ -13,7 +13,7 @@ const AllBlogs = () => {
             </Helmet>
 
             <h3 className="text-3xl  font-serif font-bold text-center underline">View All The Blogs!</h3>
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 my-12">
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 my-12 px-4">
                 {
                     allBlogs.map((Blog, index) => {
                         return <BlogCard key={index} Blog={Blog}/>
