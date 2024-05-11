@@ -1,14 +1,123 @@
 
 import { PropTypes } from 'prop-types';
+import { useEffect, useState } from 'react';
+import { GoBookmark, GoBookmarkFill } from 'react-icons/go';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import useAuth from '../hooks/useAuth';
 
 const BlogCard = ({ Blog }) => {
 
-    const { _id, name, 
-        // email, 
-        photo, title, category, short_description, 
-        // long_description 
+    const { user } = useAuth();
+    const [toggleBookmark, setToggleBookmark] = useState(false);
+    const [wishDetail, setWishDetail] = useState({});
+
+    // console.log(wishDetail)
+
+    const { _id, name,
+        // email,
+        photo, title, category, short_description,
+        long_description
     } = Blog;
+
+    
+    const firebaseMail = user?.email;
+    const firebaseName =  user?.displayName;
+
+    const userMail = firebaseMail;
+    const userName =  firebaseName;
+    const wish = {
+        _id, name, photo, title, category, short_description,
+        long_description, toggleBookmark, 
+        userMail, userName
+    }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                if (firebaseMail) {
+                    const response = await fetch(`${import.meta.env.VITE_SERVER}/allWishlists/${firebaseMail}`);
+                    const data = await response.json();
+                    setWishDetail(data);
+                    // Check if the blog is present in the user's wishlist
+                    setToggleBookmark(data.some(item => item._id === _id)); 
+                } else {
+                    const response = await fetch(`${import.meta.env.VITE_SERVER}/allWishlist/${firebaseName}`);
+                    const data = await response.json();
+                    setWishDetail(data);
+                    // Check if the blog is present in the user's wishlist
+                    setToggleBookmark(data.some(item => item._id === _id)); 
+                }
+            } catch (error) {
+                console.error('Error fetching wishlist data:', error);
+            }
+        };
+    
+        fetchData();
+    }, [firebaseMail, firebaseName, _id]);
+    
+    // Function to toggle bookmark
+    const bookmark = () => {
+
+        // const userID =  user?.uid;
+
+
+        if (!toggleBookmark) {
+
+            //send data to server
+            fetch(`${import.meta.env.VITE_SERVER}/addWishlist`, {
+                method: 'POST',
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(wish),
+            })
+                .then(res => res.json())
+                .then(data => {
+                    // console.log(data); 
+                    if (data?.insertedId) {
+                        toast.success(`Added to Wish List! ✌️`, { autoClose: 2000, theme: "colored" })
+
+                        setToggleBookmark(true);
+                        console.log('add id', wish)
+                    }
+                })
+
+            // console.log('add id', wish)
+        }
+        else{
+            toast.error(`Already in Wish List! 😨`, { autoClose: 2000, theme: "colored" });
+        }
+
+        // if (toggleBookmark) {
+
+            
+            // const wish = {
+            //     _id, name, email, photo, title, category, short_description,
+            //     long_description, toggleBookmark
+            // }
+
+            // //delete
+            // fetch(`${import.meta.env.VITE_SERVER}/deleteWishlist/${_id}`, {
+            //     method: 'DELETE',
+            // })
+            //     .then(res => res.json())
+            //     .then(data => {
+            //         // console.log(data);
+            //         if (data.deletedCount > 0) {
+                        
+            //             toast.error(`Removed from Wish List! 😨`, { autoClose: 2000, theme: "colored" })
+
+            //             setToggleBookmark(false);
+            //             console.log('rmv id', wish)
+            //         }
+
+            //     })
+
+            // console.log('rmv id', wish)
+        // }
+
+    };
+
+
 
     return (
         <div
@@ -26,7 +135,7 @@ const BlogCard = ({ Blog }) => {
                 </figure>
                 <div className="card-body items-center text-start ">
 
-                    <div className=" w-full space-y-2">
+                    <div className=" w-full space-y-2 relative">
                         <h2 className="text-xl font-semibold text-start font-serif">
                             {title}
                         </h2>
@@ -40,6 +149,16 @@ const BlogCard = ({ Blog }) => {
                                 {name}
                             </span>
                         </p>
+                        <div className='absolute right-0 top-0' onClick={bookmark}>
+                            {
+                                !toggleBookmark ? <button><GoBookmark size={25} /></button>
+                                    : <button><GoBookmarkFill size={25} /></button>
+                            }
+                            {
+                                // !toggleBookmark ? <button><GoBookmark size={25} /></button>
+                                // !toggleBookmark && (wishDetail.userMail !== firebaseMail ||  wishDetail.userName !== firebaseName) ? <button><GoBookmarkFill size={25} /></button> : <button><GoBookmark size={25} /></button>
+                            }
+                        </div>
                     </div>
 
                     <div className="divider my-0 divider-info"></div>
@@ -48,7 +167,8 @@ const BlogCard = ({ Blog }) => {
                         <p className='text-base'>{short_description}</p>
                     </div>
                 </div>
-                <Link to={`/allBlogs/${_id}`} className='btn m-4 bg-secondary hover:bg-info hover:text-white animate-pulse hover:animate-none'>View Details</Link>
+
+                <Link to={`/allBlogs/${_id}`} className='btn m-4 bg-secondary text-base-300 hover:bg-info hover:text-white animate-pulse hover:animate-none'>View Details</Link>
             </div>
 
         </div>
