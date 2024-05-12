@@ -5,6 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import Swal from 'sweetalert2';
 import Loader from "../components/Loader";
 import useAuth from "../hooks/useAuth";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const EditBlog = () => {
 
@@ -20,11 +22,11 @@ const EditBlog = () => {
 
     //get data to server
     useEffect(() => {
-        fetch(`import.meta.env.VITE_SERVER/addTouristSpot/allTouristSpot/${id}`)
+        fetch(`${import.meta.env.VITE_SERVER}/allblogs/${id}`)
             .then((res) => res.json())
             .then(data => {
                 setEditBlog(data);
-                console.log(data);
+                // console.log(data);
             })
     }, [id]);
 
@@ -36,7 +38,7 @@ const EditBlog = () => {
     // console.log(tourSpot);
 
     // update tour spot
-    const handleUpdate = e => {
+    const handleUpdate = async e => {
         e.preventDefault();
 
         const form = e.target;
@@ -53,27 +55,29 @@ const EditBlog = () => {
 
         // console.log(updateBlog)
 
+        try {
+            const {data} = await axios.put(`${import.meta.env.VITE_SERVER}/update/${id}`, updateBlog)
+                // .then(res => res.json())
+                // .then(data => {
+                    // console.log(data); 
+                    if (data?.modifiedCount > 0) {
+                        Swal.fire({
+                            title: 'Successfully Updated!',
+                            text: 'Updated the Blog! 🎉',
+                            icon: 'success',
+                            confirmButtonText: 'Cool'
+                        }).then(() => {
+                            navigate('/myBlogs'); // navigate
+                        });
+                    }else {
+                        toast.warning('Something went Wrong!',{ autoClose: 2000, theme: "colored" })
+                    }
+                // })
+        }
+        catch (err) {
+            toast.error(err.message,{ autoClose: 2000, theme: "colored" })
+        }
 
-
-        fetch(`import.meta.env.VITE_SERVER/addTouristSpot/update/${id}`, {
-            method: 'PUT',
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify(updateBlog)
-        })
-            .then(res => res.json())
-            .then(data => {
-                // console.log(data); 
-                if (data?.modifiedCount > 0) {
-                    Swal.fire({
-                        title: 'Successfully Updated!',
-                        text: 'Updated the Tourist Spot! 🎉',
-                        icon: 'success',
-                        confirmButtonText: 'Cool'
-                    }).then(() => {
-                        navigate('/myList'); // navigate
-                    });
-                }
-            })
     }
 
     // loader

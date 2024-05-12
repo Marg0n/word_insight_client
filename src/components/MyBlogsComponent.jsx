@@ -1,19 +1,17 @@
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
-import { MdDeleteForever } from 'react-icons/md';
 import 'animate.css';
 import { Tooltip } from "react-tooltip";
 import 'react-tooltip/dist/react-tooltip.css';
 
-const WishlistCard = ({ blog, handleDelete }) => {
+const MyBlogsComponent = ({ blog }) => {
 
 
-    const { _id, blogId,
+    const { _id, 
         // name, email,
         photo, title, category, short_description,
         // long_description
     } = blog;
-
 
     return (
         
@@ -43,35 +41,23 @@ const WishlistCard = ({ blog, handleDelete }) => {
                 <td>{short_description}</td>
                 <td className='flex items-center gap-4 justify-center'>
 
-                    <Link to={`/allBlogs/${blogId}`} className='btn bg-error text-base-300 hover:bg-blue-500 hover:text-white animate-pulse btn-xs'>View Details</Link>
-
-                    <button
-                        onClick={() => handleDelete(_id)}
-                        data-tooltip-id="delete-tooltip"
-                        data-tooltip-content="Delete Wishlist"
-                        className='btn btn-neutral hover:btn-error btn-xs  animate__animated animate__tada animate__infinite'>
-                        <MdDeleteForever
-                            size={20}
-                            className='text-primary group-hover:text-secondary'
-                        />
-                    </button>
-                    <Tooltip id="delete-tooltip" />
-
-                    {/* <Link
+                    <Link to={`/allBlogs/${_id}`} className='btn bg-error text-base-300 hover:bg-blue-500 hover:text-white animate-pulse btn-xs'>View Details</Link>
+                    
+                    <Link
                         to={`/myBlogs/edit/${_id}`}
                         data-tooltip-id="update-tooltip"
                         data-tooltip-content="Edit"
                         className='btn btn-neutral hover:btn-info btn-xs animate__animated  animate__jello animate__infinite'>📝</Link>
-                    <Tooltip id="update-tooltip" /> */}
+                    <Tooltip id="update-tooltip" />
                 </td>
             </tr>
         
     );
 };
 
-WishlistCard.propTypes = {
+MyBlogsComponent.propTypes = {
     blog: PropTypes.object,
     handleDelete: PropTypes.func,
 }
 
-export default WishlistCard;
+export default MyBlogsComponent;
