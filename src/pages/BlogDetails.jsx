@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
+import Loader from "../components/Loader";
 
 
 const BlogDetails = () => {
@@ -29,6 +30,22 @@ const BlogDetails = () => {
     //     // console.log(singleBook);
     //     setBookDetails(singleBook);
     // }, [book, id]);
+
+    
+    // loader
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading) {
+        return <Loader />
+    }
 
 
     return (

@@ -8,7 +8,7 @@ import 'react-tooltip/dist/react-tooltip.css';
 const WishlistCard = ({ blog, handleDelete }) => {
 
 
-    const { _id, 
+    const { _id, blogId,
         // name, email,
         photo, title, category, short_description,
         // long_description
@@ -43,7 +43,7 @@ const WishlistCard = ({ blog, handleDelete }) => {
                 <td>{short_description}</td>
                 <td className='flex items-center gap-4 justify-center'>
 
-                    <Link to={`/allBlogs/${_id}`} className='btn bg-error text-base-300 hover:bg-blue-500 hover:text-white animate-pulse btn-xs'>View Details</Link>
+                    <Link to={`/allBlogs/${blogId}`} className='btn bg-error text-base-300 hover:bg-blue-500 hover:text-white animate-pulse btn-xs'>View Details</Link>
 
                     <button
                         onClick={() => handleDelete(_id)}
@@ -57,12 +57,12 @@ const WishlistCard = ({ blog, handleDelete }) => {
                     </button>
                     <Tooltip id="delete-tooltip" />
 
-                    <Link
+                    {/* <Link
                         to={`/wishlist/${_id}`}
                         data-tooltip-id="update-tooltip"
                         data-tooltip-content="Edit"
                         className='btn btn-neutral hover:btn-info btn-xs animate__animated  animate__jello animate__infinite'>📝</Link>
-                    <Tooltip id="update-tooltip" />
+                    <Tooltip id="update-tooltip" /> */}
                 </td>
             </tr>
         
