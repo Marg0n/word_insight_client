@@ -21,17 +21,17 @@ const BlogCard = ({ Blog }) => {
         long_description
     } = Blog;
 
-    
+
     const firebaseMail = user?.email;
-    const firebaseName =  user?.displayName;
+    const firebaseName = user?.displayName;
 
     const userMail = firebaseMail;
-    const userName =  firebaseName;
-    const blogId =  _id;
+    const userName = firebaseName;
+    const blogId = _id;
     const wish = {
         name, photo, title, category, short_description,
-        long_description, toggleBookmark, 
-        userMail, userName,blogId
+        long_description,
+        userMail, userName, blogId
     }
 
     useEffect(() => {
@@ -42,22 +42,22 @@ const BlogCard = ({ Blog }) => {
                     const data = await response.json();
                     // setWishDetail(data);
                     // Check if the blog is present in the user's wishlist
-                    setToggleBookmark(data.some(item => item.blogId === blogId)); 
+                    setToggleBookmark(data.some(item => item.blogId === blogId));
                 } else {
                     const response = await fetch(`${import.meta.env.VITE_SERVER}/allWishlist/${firebaseName}`);
                     const data = await response.json();
                     // setWishDetail(data);
                     // Check if the blog is present in the user's wishlist
-                    setToggleBookmark(data.some(item => item.blogId === blogId)); 
+                    setToggleBookmark(data.some(item => item.blogId === blogId));
                 }
             } catch (error) {
                 console.error('Error fetching wishlist data:', error);
             }
         };
-    
+
         fetchData();
     }, [firebaseMail, firebaseName, _id, blogId]);
-    
+
     // Function to toggle bookmark
     const bookmark = () => {
 
@@ -65,6 +65,8 @@ const BlogCard = ({ Blog }) => {
 
 
         if (!toggleBookmark) {
+
+            if (!user) { return toast.info('Please Login', { autoClose: 2000, theme: "colored" }); }
 
             //send data to server
             fetch(`${import.meta.env.VITE_SERVER}/addWishlist`, {
@@ -85,36 +87,36 @@ const BlogCard = ({ Blog }) => {
 
             // console.log('add id', wish)
         }
-        else{
+        else {
             toast.error(`Already in Wish List! 😨`, { autoClose: 2000, theme: "colored" });
         }
 
         // if (toggleBookmark) {
 
-            
-            // const wish = {
-            //     _id, name, email, photo, title, category, short_description,
-            //     long_description, toggleBookmark
-            // }
 
-            // //delete
-            // fetch(`${import.meta.env.VITE_SERVER}/deleteWishlist/${_id}`, {
-            //     method: 'DELETE',
-            // })
-            //     .then(res => res.json())
-            //     .then(data => {
-            //         // console.log(data);
-            //         if (data.deletedCount > 0) {
-                        
-            //             toast.error(`Removed from Wish List! 😨`, { autoClose: 2000, theme: "colored" })
+        // const wish = {
+        //     _id, name, email, photo, title, category, short_description,
+        //     long_description, toggleBookmark
+        // }
 
-            //             setToggleBookmark(false);
-            //             console.log('rmv id', wish)
-            //         }
+        // //delete
+        // fetch(`${import.meta.env.VITE_SERVER}/deleteWishlist/${_id}`, {
+        //     method: 'DELETE',
+        // })
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         // console.log(data);
+        //         if (data.deletedCount > 0) {
 
-            //     })
+        //             toast.error(`Removed from Wish List! 😨`, { autoClose: 2000, theme: "colored" })
 
-            // console.log('rmv id', wish)
+        //             setToggleBookmark(false);
+        //             console.log('rmv id', wish)
+        //         }
+
+        //     })
+
+        // console.log('rmv id', wish)
         // }
 
     };
@@ -166,6 +168,7 @@ const BlogCard = ({ Blog }) => {
                                 {name}
                             </span>
                         </p>
+
                         <div className='absolute right-0 top-0' onClick={bookmark}>
                             {
                                 !toggleBookmark ? <button><GoBookmark size={25} /></button>
@@ -176,6 +179,9 @@ const BlogCard = ({ Blog }) => {
                                 // !toggleBookmark && (wishDetail.userMail !== firebaseMail ||  wishDetail.userName !== firebaseName) ? <button><GoBookmarkFill size={25} /></button> : <button><GoBookmark size={25} /></button>
                             }
                         </div>
+
+
+
                     </div>
 
                     <div className="divider my-0 divider-info"></div>

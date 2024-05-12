@@ -128,6 +128,7 @@ const EditBlog = () => {
                     <label className="form-control w-full ">
                         <select className="select select-bordered" name="category" defaultValue={category}>
                         <option value="Beauty">Beauty</option>
+                            <option value="Food">Food</option>
                             <option value="Game">Game</option>
                             <option value="Politics">Politics</option>
                             <option value="Research">Research</option>

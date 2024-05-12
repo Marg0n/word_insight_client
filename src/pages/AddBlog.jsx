@@ -89,6 +89,7 @@ const AddBlog = () => {
                         <select className="select select-bordered" name="category">
                             <option disabled selected value="Other">Category Select (Default category as Other)</option>
                             <option value="Beauty">Beauty</option>
+                            <option value="Food">Food</option>
                             <option value="Game">Game</option>
                             <option value="Politics">Politics</option>
                             <option value="Research">Research</option>

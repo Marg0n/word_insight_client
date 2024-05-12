@@ -55,9 +55,9 @@ const BlogDetails = () => {
                 <title>Word Insight | Blog Details</title>
             </Helmet>
 
-            <figure className="object-contain w-1/2">
+            <figure className="object-contain w-1/2 ">
                 <img
-                    className="h-full max-h-dvh "
+                    className="h-full "
                     src={photo} alt="" />
             </figure>
             <div className="card-body  w-1/2">
