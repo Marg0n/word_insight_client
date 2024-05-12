@@ -52,6 +52,7 @@ const BlogCard = ({ Blog }) => {
                 }
             } catch (error) {
                 console.error('Error fetching wishlist data:', error);
+                toast.error(error.message, { autoClose: 2000, theme: "colored" });
             }
         };
 

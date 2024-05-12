@@ -5,6 +5,7 @@ import useAuth from "../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
 import WishlistCard from "../components/WishlistCard";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Wishlist = () => {
 
@@ -36,7 +37,8 @@ const Wishlist = () => {
                 }
             }
             catch (err) {
-                console.log(err)
+                // console.log(err)
+                toast.error(err.message, { autoClose: 2000, theme: "colored" });
             }
         }
 
