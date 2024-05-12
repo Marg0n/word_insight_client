@@ -20,17 +20,17 @@ const Wishlist = () => {
     useEffect(() => {
         const getData = async () => {
             try {
-                if (user?.displayName ) {
-                    await axios(`${import.meta.env.VITE_SERVER}/allWishlist/${user?.displayName}`)
+                if (user?.email) {
+                    await axios(`${import.meta.env.VITE_SERVER}/allWishlists/${user?.email}`)
                         .then(data => {
-                            // console.log('from name', data.data);
+                            // console.log('from mail', data);
                             setItems(data.data);
                         })
                 }
                 else {
-                    await axios(`${import.meta.env.VITE_SERVER}/allWishlists/${user?.email}`)
+                    await axios(`${import.meta.env.VITE_SERVER}/allWishlist/${user?.displayName}`)
                         .then(data => {
-                            // console.log('from mail', data);
+                            // console.log('from name', data.data);
                             setItems(data.data);
                         })
                 }

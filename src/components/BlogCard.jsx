@@ -5,6 +5,7 @@ import { GoBookmark, GoBookmarkFill } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import useAuth from '../hooks/useAuth';
+import Loader from './Loader';
 
 const BlogCard = ({ Blog }) => {
 
@@ -26,10 +27,11 @@ const BlogCard = ({ Blog }) => {
 
     const userMail = firebaseMail;
     const userName =  firebaseName;
+    const blogId =  _id;
     const wish = {
-        _id, name, photo, title, category, short_description,
+        name, photo, title, category, short_description,
         long_description, toggleBookmark, 
-        userMail, userName
+        userMail, userName,blogId
     }
 
     useEffect(() => {
@@ -40,13 +42,13 @@ const BlogCard = ({ Blog }) => {
                     const data = await response.json();
                     // setWishDetail(data);
                     // Check if the blog is present in the user's wishlist
-                    setToggleBookmark(data.some(item => item._id === _id)); 
+                    setToggleBookmark(data.some(item => item.blogId === blogId)); 
                 } else {
                     const response = await fetch(`${import.meta.env.VITE_SERVER}/allWishlist/${firebaseName}`);
                     const data = await response.json();
                     // setWishDetail(data);
                     // Check if the blog is present in the user's wishlist
-                    setToggleBookmark(data.some(item => item._id === _id)); 
+                    setToggleBookmark(data.some(item => item.blogId === blogId)); 
                 }
             } catch (error) {
                 console.error('Error fetching wishlist data:', error);
@@ -54,7 +56,7 @@ const BlogCard = ({ Blog }) => {
         };
     
         fetchData();
-    }, [firebaseMail, firebaseName, _id]);
+    }, [firebaseMail, firebaseName, _id, blogId]);
     
     // Function to toggle bookmark
     const bookmark = () => {
@@ -77,7 +79,7 @@ const BlogCard = ({ Blog }) => {
                         toast.success(`Added to Wish List! ✌️`, { autoClose: 2000, theme: "colored" })
 
                         setToggleBookmark(true);
-                        console.log('add id', wish)
+                        // console.log('add id', wish)
                     }
                 })
 
@@ -116,6 +118,21 @@ const BlogCard = ({ Blog }) => {
         // }
 
     };
+
+    // loader
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading) {
+        return <Loader />
+    }
 
 
 
