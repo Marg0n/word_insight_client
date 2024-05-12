@@ -10,6 +10,7 @@ import PrivateRoute from './../components/PrivateRoute';
 import Root from './../layouts/Root';
 import Home from './../pages/Home';
 import BlogDetails from "../pages/BlogDetails";
+import Wishlist from "../pages/Wishlist";
 
 
 export const router = createBrowserRouter([
@@ -51,6 +52,14 @@ export const router = createBrowserRouter([
             {
                 path: "/myBlogs/edit/:id",
                 element: <PrivateRoute><EditBlog /></PrivateRoute>,
+            },
+            {
+                path: "/wishlist",
+                element: <PrivateRoute><Wishlist /></PrivateRoute>,
+            },
+            {
+                path: "/wishlist/:id",
+                element: <PrivateRoute><Wishlist /></PrivateRoute>,
             },
 
         ],

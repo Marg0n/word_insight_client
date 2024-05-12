@@ -10,7 +10,7 @@ const BlogCard = ({ Blog }) => {
 
     const { user } = useAuth();
     const [toggleBookmark, setToggleBookmark] = useState(false);
-    const [wishDetail, setWishDetail] = useState({});
+    // const [wishDetail, setWishDetail] = useState({});
 
     // console.log(wishDetail)
 
@@ -38,13 +38,13 @@ const BlogCard = ({ Blog }) => {
                 if (firebaseMail) {
                     const response = await fetch(`${import.meta.env.VITE_SERVER}/allWishlists/${firebaseMail}`);
                     const data = await response.json();
-                    setWishDetail(data);
+                    // setWishDetail(data);
                     // Check if the blog is present in the user's wishlist
                     setToggleBookmark(data.some(item => item._id === _id)); 
                 } else {
                     const response = await fetch(`${import.meta.env.VITE_SERVER}/allWishlist/${firebaseName}`);
                     const data = await response.json();
-                    setWishDetail(data);
+                    // setWishDetail(data);
                     // Check if the blog is present in the user's wishlist
                     setToggleBookmark(data.some(item => item._id === _id)); 
                 }
