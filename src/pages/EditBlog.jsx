@@ -105,7 +105,7 @@ const EditBlog = () => {
 
             <AttentionSeeker effect='flash' >
                 <div className="mb-10 text-center">
-                    <h3 className="text-3xl text-info font-sans font-bold underline-offset-2 underline">Add A Blog</h3>
+                    <h3 className="text-3xl text-info font-sans font-bold underline-offset-2 underline">Edit Your Blog</h3>
                 </div>
             </AttentionSeeker>
 

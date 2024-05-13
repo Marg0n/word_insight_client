@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { Tooltip } from "react-tooltip";
 
 
 const BlogDetails = () => {
@@ -62,7 +63,7 @@ const BlogDetails = () => {
     // comment adder
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(userName === user?.displayName) return toast.error('Can not comment on own blog!', { autoClose: 2000, theme: "colored" });
+        if (userName === user?.displayName) return toast.error('Can not comment on own blog!', { autoClose: 2000, theme: "colored" });
         const form = e.target;
         const comments = form.comments.value;
 
@@ -120,7 +121,7 @@ const BlogDetails = () => {
                         className="h-full "
                         src={photo} alt="" />
                 </figure>
-                <div className="card-body  w-1/2">
+                <div className="card-body  w-1/2 relative">
                     <h2 className="card-title text-xl font-semibold text-start font-serif">
                         {title}
                     </h2>
@@ -144,11 +145,23 @@ const BlogDetails = () => {
                         {name}
                         {/* long_description display {long_description.length} */}
                     </span></p>
+                    {
+                        userName === user?.displayName && <span className="text-right absolute right-12 ">                            
+                                <Link
+                                    to={`/myBlogs/edit/${id}`}
+                                    data-tooltip-id="update-tooltip"
+                                    data-tooltip-content="Edit"
+                                    className='btn btn-neutral hover:btn-info btn-xl animate__animated  animate__jello animate__infinite'>📝</Link>
+                                <Tooltip id="update-tooltip" />
+                            </span>
+                    }
+
 
 
                 </div>
             </div>
 
+            {/* comment */}
             <div className="my-8 w-full">
                 <form onSubmit={handleSubmit}>
                     <textarea
