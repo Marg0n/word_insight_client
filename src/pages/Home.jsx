@@ -5,6 +5,7 @@ import Slider from "../components/Slider";
 // import logo from '/wordInsight_logo.jpeg';
 import { useTypewriter, Cursor } from 'react-simple-typewriter';
 import { AttentionSeeker } from "react-awesome-reveal";
+import Hero from "../components/Hero";
 
 
 
@@ -49,6 +50,10 @@ const Home = () => {
 
                 </h1>
             </AttentionSeeker>
+
+            <div className="my-16">
+                <Hero/>
+            </div>
 
             <div className="my-16">
                 <div className="text-center my-6 space-y-4">

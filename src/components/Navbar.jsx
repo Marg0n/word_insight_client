@@ -39,7 +39,7 @@ const Navbar = () => {
       <Link to='/addBlog'>Add Blog</Link>
     </li>
     <li>
-      <Link to='/myBlogs'>My Blog</Link>
+      <Link to='/myBlogs'>My Blogs</Link>
     </li>
     <li>
       <Link to='/wishlist'>Wishlist</Link>
