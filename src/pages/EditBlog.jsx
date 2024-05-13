@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 const EditBlog = () => {
 
     const { user } = useAuth();
+    const writersPhoto = user?.photoURL;
 
     const { id } = useParams();
 
@@ -51,7 +52,7 @@ const EditBlog = () => {
         const short_description = form.short_description.value;
         const long_description = form.long_description.value;
 
-        const updateBlog = { name, email, photo, title, category, short_description, long_description };
+        const updateBlog = { name, email, writersPhoto, photo, title, category, short_description, long_description };
 
         // console.log(updateBlog)
 

@@ -7,6 +7,7 @@ import useAuth from "../hooks/useAuth";
 const AddBlog = () => {
 
     const { user } = useAuth();
+    const writersPhoto = user?.photoURL;
 
     const handleAdd = e => {
         e.preventDefault();
@@ -21,7 +22,7 @@ const AddBlog = () => {
         const short_description = form.short_description.value;
         const long_description = form.long_description.value;
 
-        const newBlog = { name, email, photo, title, category, short_description, long_description };
+        const newBlog = { name, email, writersPhoto, photo, title, category, short_description, long_description };
 
         // console.log(newBlog)
 

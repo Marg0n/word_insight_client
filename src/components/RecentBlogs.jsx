@@ -153,7 +153,7 @@ const RecentBlogs = ({ Blog }) => {
 
                     <div className="divider my-0 divider-info"></div>
 
-                    <div className="w-full flex justify-between h-36">
+                    <div className="w-full flex justify-between h-36 overflow-hidden" title={short_description}>
                         <p className='text-base'>{short_description}</p>
                     </div>
                 </div>
