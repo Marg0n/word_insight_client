@@ -5,6 +5,7 @@ import Loader from "../components/Loader";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 
 const BlogDetails = () => {
@@ -61,7 +62,7 @@ const BlogDetails = () => {
     // comment adder
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        if(userName === user?.displayName) return toast.error('Can not comment on own blog!', { autoClose: 2000, theme: "colored" });
         const form = e.target;
         const comments = form.comments.value;
 
