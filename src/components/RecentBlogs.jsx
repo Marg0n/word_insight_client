@@ -1,4 +1,3 @@
-
 import { PropTypes } from 'prop-types';
 import { useEffect, useState } from 'react';
 import { GoBookmark, GoBookmarkFill } from 'react-icons/go';
@@ -7,13 +6,11 @@ import { toast } from 'react-toastify';
 import useAuth from '../hooks/useAuth';
 import Loader from './Loader';
 
-const BlogCard = ({ Blog }) => {
+const RecentBlogs = ({ Blog }) => {
 
     const { user } = useAuth();
     const [toggleBookmark, setToggleBookmark] = useState(false);
-    // const [wishDetail, setWishDetail] = useState({});
 
-    // console.log(wishDetail)
 
     const { _id, name,
         // email,
@@ -40,13 +37,13 @@ const BlogCard = ({ Blog }) => {
                 if (firebaseMail) {
                     const response = await fetch(`${import.meta.env.VITE_SERVER}/allWishlists/${firebaseMail}`);
                     const data = await response.json();
-                    // setWishDetail(data);
+
                     // Check if the blog is present in the user's wishlist
                     setToggleBookmark(data.some(item => item.blogId === blogId));
                 } else {
                     const response = await fetch(`${import.meta.env.VITE_SERVER}/allWishlist/${firebaseName}`);
                     const data = await response.json();
-                    // setWishDetail(data);
+
                     // Check if the blog is present in the user's wishlist
                     setToggleBookmark(data.some(item => item.blogId === blogId));
                 }
@@ -63,7 +60,6 @@ const BlogCard = ({ Blog }) => {
     const bookmark = () => {
 
         // const userID =  user?.uid;
-
 
         if (!toggleBookmark) {
 
@@ -92,34 +88,6 @@ const BlogCard = ({ Blog }) => {
             toast.error(`Already in Wish List! 😨`, { autoClose: 2000, theme: "colored" });
         }
 
-        // if (toggleBookmark) {
-
-
-        // const wish = {
-        //     _id, name, email, photo, title, category, short_description,
-        //     long_description, toggleBookmark
-        // }
-
-        // //delete
-        // fetch(`${import.meta.env.VITE_SERVER}/deleteWishlist/${_id}`, {
-        //     method: 'DELETE',
-        // })
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         // console.log(data);
-        //         if (data.deletedCount > 0) {
-
-        //             toast.error(`Removed from Wish List! 😨`, { autoClose: 2000, theme: "colored" })
-
-        //             setToggleBookmark(false);
-        //             console.log('rmv id', wish)
-        //         }
-
-        //     })
-
-        // console.log('rmv id', wish)
-        // }
-
     };
 
     // loader
@@ -136,8 +104,6 @@ const BlogCard = ({ Blog }) => {
     if (loading) {
         return <Loader />
     }
-
-
 
     return (
         <div
@@ -199,9 +165,8 @@ const BlogCard = ({ Blog }) => {
     );
 };
 
-BlogCard.propTypes = {
+RecentBlogs.propTypes = {
     Blog: PropTypes.object,
 }
 
-
-export default BlogCard;
+export default RecentBlogs;

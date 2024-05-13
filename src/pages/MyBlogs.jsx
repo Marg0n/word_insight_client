@@ -21,7 +21,7 @@ const MyBlogs = () => {
         const getData = async () => {
             try {
                 if (user?.email) {
-                    await axios(`${import.meta.env.VITE_SERVER}/allblogs/${user?.email}`)
+                    await axios(`${import.meta.env.VITE_SERVER}/all_Blogs/${user?.email}`)
                         .then(data => {
                             // console.log('from mail', data);
                             setItems(data.data);

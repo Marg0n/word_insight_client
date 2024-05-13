@@ -7,10 +7,14 @@ import { useTypewriter, Cursor } from 'react-simple-typewriter';
 import { AttentionSeeker } from "react-awesome-reveal";
 import Hero from "../components/Hero";
 import Newsletter from "../components/Newsletter";
+import RecentBlogs from "../components/RecentBlogs";
+import { useLoaderData } from "react-router-dom";
 
 
 
 const Home = () => {
+
+    const allBlogs = useLoaderData();
 
     // loader
     const [loading, setLoading] = useState(true);
@@ -54,17 +58,36 @@ const Home = () => {
 
             {/* banner */}
             <div className="my-16">
-                <Hero/>
+                <Hero />
             </div>
 
             {/* recent 6 blogs */}
             <div className="my-16">
-                
+                <div className="text-center my-6 space-y-4">
+                    <h3 className="text-3xl font-serif text-center">
+                        Check out some of the Recent Blogs!
+                    </h3>
+                </div>
+
+                <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 my-12 px-4">
+                    {
+                        allBlogs.slice(-6).reverse().map((Blog, index) => {
+                            return <RecentBlogs key={index} Blog={Blog} />
+                        })
+                    }
+                </div>
+
             </div>
 
             {/* newsletter */}
             <div className="my-16">
-                <Newsletter/>
+                <div className="text-center my-6 space-y-4">
+                    <h3 className="text-3xl font-serif text-center">
+                        Subscribe for updates!
+                    </h3>
+                </div>
+
+                <Newsletter />
             </div>
 
             {/* slider */}
@@ -76,10 +99,10 @@ const Home = () => {
                     <p className="text-base">Choose you choice from our available categories!</p>
                 </div>
 
-            <div className='h-[calc(dvh-380px)] my-4'>
-                <Slider />
-            </div>
-                
+                <div className='h-[calc(dvh-380px)] my-4'>
+                    <Slider />
+                </div>
+
             </div>
         </div>
     );

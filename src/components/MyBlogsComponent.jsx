@@ -21,7 +21,7 @@ const MyBlogsComponent = ({ blog }) => {
                     <div className="flex items-center gap-3">
                         <div className="avatar">
                             <div className="mask mask-squircle w-12 h-12">
-                                <img src={photo} />
+                                <img src={photo || 'https://i.ibb.co/kgKXrNv/no-images.jpg'} />
                             </div>
                         </div>
                         <div>

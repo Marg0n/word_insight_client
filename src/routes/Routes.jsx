@@ -23,6 +23,7 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 element: <Home />,
+                loader: () => fetch(`${import.meta.env.VITE_SERVER}/allBlogs`),
             },
             {
                 path: "/login",
