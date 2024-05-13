@@ -8,18 +8,24 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/thumbs';
 import { Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules';
-// import { PropTypes } from 'prop-types';
-import SlideComponents from './SlideComponents';
+import { PropTypes } from 'prop-types';
+// import SlideComponents from './SlideComponents';
+import { Link } from 'react-router-dom';
 
 
 
-const Slider = () => {
+const Slider = ({ allBlogs }) => {
     // const Slider = ({ showSliders }) => {
 
+    // Sort blogs by the length of long_description in descending order
+    const sortedBlogs = [...allBlogs].sort((a, b) => b.long_description.length - a.long_description.length);
+
+    // Select the first 10 blogs
+    const last10Blogs = sortedBlogs.slice(-10);
 
     return (
         <>
-            
+
             <Swiper
                 style={{
                     '--swiper-navigation-color': '#fff',
@@ -29,7 +35,7 @@ const Slider = () => {
                     dynamicBullets: true,
                     clickable: true,
                 }}
-                slidesPerView={3}
+                slidesPerView={4}
                 spaceBetween={30}
                 centeredSlides={true}
                 autoplay={{
@@ -42,34 +48,34 @@ const Slider = () => {
                 className="mySwiper"
             >
 
-                {/* {
-                    showSliders.map(showSlider => {
-                        
+                {
+                    last10Blogs.map(blog => {
+
                         return <SwiperSlide
-                            key={showSlider._idx}
+                            key={blog._id}
                             style={{
                                 'position': 'relative',
 
                             }}
                         >
-                           <img className='h-96 w-full' src={showSlider.photo} alt="" />
-                            <div className='absolute bottom-4 right-4 p-6 text-primary font-serif text-right'>
+                            <img className='h-96 w-full' src={blog.photo} alt="" />
+                            <div className='absolute bottom-4 right-4 p-6 text-info font-serif text-right'>
                                 <div className="text-3xl font-bold">
-                                    {showSlider.country}
+                                    {blog?.title}
                                 </div>
                                 <div className="text-xl font-semibold">
-                                    {showSlider.spotName}
+                                    {blog?.name}
                                 </div>
                                 <div className="text-base font-semibold" >
-                                    <p>
-                                        {showSlider.description}
-                                    </p>
+                                    <Link to={`/allBlogs/${blog?._id}`} className='btn border-none bg-error text-base-300 hover:bg-blue-500 hover:text-white animate-pulse btn-xs'>View Blog</Link>
                                 </div>
                             </div>
                         </SwiperSlide>
                     })
-                } */}
-                <SwiperSlide  >
+                }
+
+
+                {/* <SwiperSlide  >
                     <SlideComponents 
                     image='https://i.ibb.co/vPx6XgP/Chicken-Curry.jpg'
                     text='Get your Web Development projects done skillfully!'/>
@@ -93,7 +99,7 @@ const Slider = () => {
                     <SlideComponents 
                     image='https://i.ibb.co/vPx6XgP/Chicken-Curry.jpg'
                     text='Get your Digital marketing up and running!'/>
-                </SwiperSlide>
+                </SwiperSlide> */}
 
 
             </Swiper>
@@ -102,8 +108,8 @@ const Slider = () => {
     );
 };
 
-// Slider.propTypes = {
-//     showSliders: PropTypes.array,
-// }
+Slider.propTypes = {
+    allBlogs: PropTypes.array,
+}
 
 export default Slider;

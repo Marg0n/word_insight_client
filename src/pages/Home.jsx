@@ -9,6 +9,7 @@ import Hero from "../components/Hero";
 import Newsletter from "../components/Newsletter";
 import RecentBlogs from "../components/RecentBlogs";
 import { useLoaderData } from "react-router-dom";
+import Compliments from "../components/Compliments";
 
 
 
@@ -94,15 +95,27 @@ const Home = () => {
             <div className="my-16">
                 <div className="text-center my-6 space-y-4">
                     <h3 className="text-3xl font-serif text-center">
-                        Browse Job Categories
+                        Have a look at our Featured Categories!
                     </h3>
-                    <p className="text-base">Choose you choice from our available categories!</p>
+                    <p className="text-base">Take a look at some of our recommended featured Blogs!</p>
                 </div>
 
                 <div className='h-[calc(dvh-380px)] my-4'>
-                    <Slider />
+                    <Slider allBlogs={allBlogs} />
                 </div>
 
+            </div>
+
+
+            {/* what to expect */}
+            <div className="my-16">
+                <div className="text-center my-6 space-y-4">
+                    <h3 className="text-3xl font-serif text-center mb-8">
+                        People ❤️ Word Insight!
+                    </h3>
+
+                    <Compliments />
+                </div>
             </div>
         </div>
     );

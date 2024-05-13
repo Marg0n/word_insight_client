@@ -12,6 +12,7 @@ import Home from './../pages/Home';
 import BlogDetails from "../pages/BlogDetails";
 import Wishlist from "../pages/Wishlist";
 import MyBlogs from "../pages/MyBlogs";
+import Featured from "../pages/Featured";
 
 
 export const router = createBrowserRouter([
@@ -38,6 +39,11 @@ export const router = createBrowserRouter([
                 element: <AllBlogs />,
                 loader: () => fetch(`${import.meta.env.VITE_SERVER}/allBlogs`),
 
+            },
+            {
+                path: "/featured",
+                element: <Featured />,
+                loader: () => fetch(`${import.meta.env.VITE_SERVER}/allBlogs`),
             },
             {
                 path: "/allBlogs/:id",

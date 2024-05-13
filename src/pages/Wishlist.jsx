@@ -121,7 +121,7 @@ const Wishlist = () => {
 
 
             <div className="overflow-x-auto my-12">
-                <table className="table">
+                <table className="table  table-zebra border-2 border-base-300">
                     {/* head */}
                     <thead>
                         <tr>

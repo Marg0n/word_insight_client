@@ -81,7 +81,8 @@ const BlogDetails = () => {
                 <div className="divider my-0 "></div>
 
                 <p className="text-base text-right">Added By : <span className='font-semibold'>
-                    {name}
+                    {name} 
+                    {/* long_description display {long_description.length} */}
                 </span></p>
 
                 
