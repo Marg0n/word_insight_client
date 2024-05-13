@@ -7,7 +7,7 @@ const Hero = () => {
     const {user} = useAuth();
 
     return (
-        <div className="hero min-h-screen text-base-content" style={{ backgroundImage: 'url(https://i.ibb.co/G2xCfZf/interior-design-mountain-view.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+        <div className="hero min-h-screen text-base-content" style={{ backgroundImage: 'url(https://i.ibb.co/G2xCfZf/interior-design-mountain-view.jpg)', backgroundSize: 'cover', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat' }}>
             <div className="hero-overlay bg-opacity-60"></div>
             <div className="hero-content text-center text-neutral-content">
                 <div className="max-w-md lg:max-w-[calc(100vw-580px)]">

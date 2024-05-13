@@ -6,6 +6,7 @@ import Slider from "../components/Slider";
 import { useTypewriter, Cursor } from 'react-simple-typewriter';
 import { AttentionSeeker } from "react-awesome-reveal";
 import Hero from "../components/Hero";
+import Newsletter from "../components/Newsletter";
 
 
 
@@ -51,10 +52,22 @@ const Home = () => {
                 </h1>
             </AttentionSeeker>
 
+            {/* banner */}
             <div className="my-16">
                 <Hero/>
             </div>
 
+            {/* recent 6 blogs */}
+            <div className="my-16">
+                
+            </div>
+
+            {/* newsletter */}
+            <div className="my-16">
+                <Newsletter/>
+            </div>
+
+            {/* slider */}
             <div className="my-16">
                 <div className="text-center my-6 space-y-4">
                     <h3 className="text-3xl font-serif text-center">
