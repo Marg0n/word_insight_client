@@ -16,6 +16,7 @@ const BlogDetails = () => {
     const [getComments, setGetComments] = useState([]);
     const [blogDetail, setBlogDetail] = useState({});
 
+    // get all blogs data by id
     useEffect(() => {
         fetch(`${import.meta.env.VITE_SERVER}/allBlogs/${id}`)
             .then((res) => res.json())
@@ -26,70 +27,143 @@ const BlogDetails = () => {
     }, [id]);
 
     const { name,
-        // email,
+        email,
         photo, title, category, short_description,
         long_description
     } = blogDetail;
 
-    // useEffect(() => {
-    //     const singleBook = book.find(item => item.bookId == id);
-    //     // console.log(singleBook);
-    //     setBookDetails(singleBook);
-    // }, [book, id]);
+    const [loadUserData, setLoadUserData] = useState([]);
+
+    //get data from server to get user email if it's missing
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                if (user?.email) {
+                    const response = await axios(`${import.meta.env.VITE_SERVER}/all_Blogs/${user?.email}`);
+                    setLoadUserData(response.data);
+                    // console.log('from mail', response.data);
+                }
+                else {
+                    const response = await axios(`${import.meta.env.VITE_SERVER}/allBlog/${user?.displayName}`);
+                    setLoadUserData(response.data);
+                    // console.log('from name', data.data);
+                }
+            }
+            catch (err) {
+                // console.log(err)
+                toast.error(err.message, { autoClose: 2000, theme: "colored" });
+            }
+        }
+
+        getData();
+        
+    }, [user?.displayName, user?.email]);
 
     // user info
     const userName = user?.displayName;
     const userEmail = user?.email;
     const userPhoto = user?.photoURL;
     const postID = id;
+    const postName = name;
+    const postEmail = email;
 
 
     //get comments
     useEffect(() => {
-        axios(`${import.meta.env.VITE_SERVER}/getComments`)
+        const getData = async () => {
+            const response = await axios(`${import.meta.env.VITE_SERVER}/getComments`)
+            setGetComments(response.data);
+            // console.log(response.data);
+        }
 
-            .then(data => {
-                setGetComments(data.data);
-                // console.log(data);
-            })
+        getData();
+        
     }, [getComments]);
 
     // Filter comments based on postID
-    const filteredComments = getComments.filter(com => com.postID === id);
+    // const filteredComments = getComments.filter(com => com.postID === id);
+    // const filteredComments = getComments.filter(com => {
+    //     if(com.userEmail && com?.email) { return com.postID === id}
+    //     else { return com.userName === name} 
+    // });
+    // const filteredComments = Array.isArray(getComments) ? getComments.filter(comment => comment.postID === id) : [];
+
 
 
     // console.log('comments', getComments)
+    // console.log('filtered comments', filteredComments)
 
     // comment adder
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (userName === user?.displayName) return toast.error('Can not comment on own blog!', { autoClose: 2000, theme: "colored" });
-        const form = e.target;
-        const comments = form.comments.value;
 
-        const commenter = { userName, userEmail, userPhoto, comments, postID };
+        //prevent owner from submitting
+        try {
+            if (user?.email) {
+                if (userEmail === email) return toast.error('Can not comment on own blog!', { autoClose: 2000, theme: "colored" });
 
-        //send data to server
-        axios.post(`${import.meta.env.VITE_SERVER}/addComment`, commenter)
+                const form = e.target;
+                const comments = form.comments.value;
 
-            .then(data => {
-                // console.log(data); 
-                if (data.data?.insertedId) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Comment added! 🎉',
-                        icon: 'success',
-                        confirmButtonText: 'Cool 😎'
-                    }).then(() => {
-                        form.reset(); // Reset the form fields
-                    });
-                }
-            })
+                if (comments == '') return toast.info('At least write a word! 😒', { autoClose: 2000, theme: "colored" });
+
+                const commenter = { userName, userEmail, userPhoto, comments, postID, postName, postEmail };
+
+                //send data to server
+                axios.post(`${import.meta.env.VITE_SERVER}/addComment`, commenter)
+
+                    .then(data => {
+                        // console.log(data); 
+                        if (data.data?.insertedId) {
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'Comment added! 🎉',
+                                icon: 'success',
+                                confirmButtonText: 'Cool 😎'
+                            }).then(() => {
+                                form.reset(); // Reset the form fields
+                            });
+                        }
+                    })
+            }
+            else {
+                if (userName === name) return toast.error('Can not comment on own blog!', { autoClose: 2000, theme: "colored" });
+
+                const form = e.target;
+                const comments = form.comments.value;
+
+                if (comments == '') return toast.info('At least write a word! 😒', { autoClose: 2000, theme: "colored" });
+
+                const commenter = { userName, userEmail, userPhoto, comments, postID, postName, postEmail };
+
+                //send data to server
+                axios.post(`${import.meta.env.VITE_SERVER}/addComment`, commenter)
+
+                    .then(data => {
+                        // console.log(data); 
+                        if (data.data?.insertedId) {
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'Comment added! 🎉',
+                                icon: 'success',
+                                confirmButtonText: 'Cool 😎'
+                            }).then(() => {
+                                form.reset(); // Reset the form fields
+                            });
+                        }
+                    })
+            }
+        }
+        catch (err) {
+            // console.log(err)
+            toast.error(err.message, { autoClose: 2000, theme: "colored" });
+        }
+
     }
 
 
 
-
+    // console.log(userName ,user?.displayName,userName === user?.displayName)
 
 
     // loader
@@ -146,14 +220,15 @@ const BlogDetails = () => {
                         {/* long_description display {long_description.length} */}
                     </span></p>
                     {
-                        userName === user?.displayName && <span className="text-right absolute right-12 ">                            
-                                <Link
-                                    to={`/myBlogs/edit/${id}`}
-                                    data-tooltip-id="update-tooltip"
-                                    data-tooltip-content="Edit"
-                                    className='btn btn-neutral hover:btn-info btn-xl animate__animated  animate__jello animate__infinite'>📝</Link>
-                                <Tooltip id="update-tooltip" />
-                            </span>
+                        postEmail === loadUserData[0]?.email ? <span className="text-right absolute right-8 top-14">
+                            <Link
+                                to={`/myBlogs/edit/${id}`}
+                                data-tooltip-id="update-tooltip"
+                                data-tooltip-content="Edit"
+                                className='btn btn-neutral hover:btn-info btn-xl animate__animated  animate__jello animate__infinite'>📝</Link>
+                            <Tooltip id="update-tooltip" />
+                        </span>
+                            : ''
                     }
 
 
@@ -187,7 +262,7 @@ const BlogDetails = () => {
 
 
 
-                    filteredComments.map((cmnt, index) => {
+                    getComments.filter(com => com.postID === id).map((cmnt, index) => {
                         return <div key={index} className="flex gap-4 space-y-9">
                             <textarea
                                 disabled

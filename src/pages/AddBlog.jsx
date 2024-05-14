@@ -2,12 +2,43 @@ import { AttentionSeeker } from "react-awesome-reveal";
 import { Helmet } from "react-helmet-async";
 import Swal from 'sweetalert2';
 import useAuth from "../hooks/useAuth";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 
 const AddBlog = () => {
 
     const { user } = useAuth();
     const writersPhoto = user?.photoURL;
+    const [loadUserData, setLoadUserData] = useState([]);
+
+    //get data from server to get user email if it's missing
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                if (user?.email) {
+                    const response = await axios(`${import.meta.env.VITE_SERVER}/all_Blogs/${user?.email}`);
+                    setLoadUserData(response.data);
+                    // console.log('from mail', response.data);
+                }
+                else {
+                    const response = await axios(`${import.meta.env.VITE_SERVER}/allBlog/${user?.displayName}`);
+                    setLoadUserData(response.data);
+                    // console.log('from name', data.data);
+                }
+            }
+            catch (err) {
+                // console.log(err)
+                toast.error(err.message, { autoClose: 2000, theme: "colored" });
+            }
+        }
+
+        getData();
+        
+    }, [user?.displayName, user?.email]);
+
+    // console.log(loadUserData, loadUserData[0]?.email)
 
     const handleAdd = e => {
         e.preventDefault();
@@ -75,12 +106,12 @@ const AddBlog = () => {
 
                     <label className="input input-bordered flex items-center gap-2">
                         User Name
-                        <input type="text" className="grow  text-primary" placeholder="Tony Stark" name="name" defaultValue={user?.displayName || ""} required/>
+                        <input type="text" className="grow  text-primary" placeholder="Tony Stark" name="name" defaultValue={user?.displayName || ""} required />
                     </label>
 
                     <label className="input input-bordered flex items-center gap-2">
                         User Email
-                        <input type="email" className="grow text-primary" placeholder="email@site.com" name="email" defaultValue={user?.email || ''} required/>
+                        <input type="email" className="grow text-primary" placeholder="email@site.com" name="email" defaultValue={user?.email || loadUserData[0]?.email} required />
                     </label>
 
                     <label className="form-control w-full ">

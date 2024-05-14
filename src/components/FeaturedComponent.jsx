@@ -43,7 +43,7 @@ const FeaturedComponent = ({ blog, index }) => {
                 </div>
             </td>
 
-            <td className='flex items-center gap-4 justify-center'>
+            <td className=''>
 
                 <Link to={`/allBlogs/${_id}`} className='btn bg-error text-base-300 hover:bg-blue-500 hover:text-white animate-pulse btn-xs'>View Blog</Link>
 
