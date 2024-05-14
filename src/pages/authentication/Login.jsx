@@ -47,7 +47,7 @@ const Login = () => {
 
         if (result.user) {
           setCustomLoader(false);
-          navigate(whereTo)
+          navigate(whereTo, {replace: true});
         }
 
       })

@@ -67,7 +67,7 @@ const Registration = () => {
             // loader
             setCustomLoader(false)
             loggedOut();
-            navigate(whereTo)
+            navigate(whereTo,{replace: true})
 
           }).catch((errors) => {
 
