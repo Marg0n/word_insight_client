@@ -11,6 +11,7 @@ import bgImg from '../../assets/images/login.png';
 import useAuth from "../../hooks/useAuth";
 import Loader from './../../components/Loader';
 import logo from '/wordInsight_logo.jpeg';
+import axios from "axios";
 
 
 const Login = () => {
@@ -43,11 +44,16 @@ const Login = () => {
 
         setCustomLoader(true);
         // console.log(result.user)
+        const loggedUser = { email };
+        axios.post(`${import.meta.env.VITE_SERVER}/jwt`, loggedUser, { withCredentials: true })
+          .then(res => {
+            console.log(res.data)
+          })
         toast.success("Logged in successful!🎉", { autoClose: 2000, theme: "colored" })
 
         if (result.user) {
           setCustomLoader(false);
-          navigate(whereTo, {replace: true});
+          navigate(whereTo, { replace: true });
         }
 
       })
@@ -70,6 +76,16 @@ const Login = () => {
     socialLoginProvider()
       .then(result => {
         if (result.user) {
+          // console.log(result.user)
+          axios.post(`${import.meta.env.VITE_SERVER}/jwt`, {
+            email: (result?.user?.email !== null ? result.user?.email : result.user?.displayName),
+            // email: result?.user?.email,
+          },
+            { withCredentials: true }
+          )
+            .then(res => {
+              console.log(res.data)
+            })
           toast.success("Logged in successful!🎉", { autoClose: 2000, theme: "colored" })
           navigate(whereTo)
         }

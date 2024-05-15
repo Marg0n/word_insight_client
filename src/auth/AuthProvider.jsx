@@ -11,6 +11,7 @@ import {
 import PropTypes from 'prop-types';
 import { createContext, useEffect, useState } from "react";
 import auth from './../firebase/firebase.config';
+import axios from 'axios';
 
 
 export const AuthContext = createContext(null);
@@ -65,7 +66,8 @@ const AuthProvider = ({ children }) => {
 
     // logout
     const loggedOut = () => {
-        setLoading(true)
+        setLoading(true);
+        axios(`${import.meta.env.VITE_SERVER}/logout`,{withCredentials: true});
         setUser(null);
         return signOut(auth);
     };
