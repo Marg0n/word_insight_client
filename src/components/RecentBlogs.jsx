@@ -51,7 +51,7 @@ const RecentBlogs = ({ Blog }) => {
                     setToggleBookmark(data.some(item => item.blogId === blogId));
                 }
             } catch (error) {
-                console.error('Error fetching wishlist data:', error);
+                // console.error('Error fetching wishlist data:', error);
                 // toast.error(error.message, { autoClose: 2000, theme: "colored" });
             }
         };

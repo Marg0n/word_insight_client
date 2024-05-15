@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet-async";
 import WishlistCard from "../components/WishlistCard";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { AttentionSeeker } from "react-awesome-reveal";
 
 const Wishlist = () => {
 
@@ -22,14 +23,14 @@ const Wishlist = () => {
         const getData = async () => {
             try {
                 if (user?.email) {
-                    await axios(`${import.meta.env.VITE_SERVER}/allWishlists/${user?.email}`,{ withCredentials: true })
+                    await axios(`${import.meta.env.VITE_SERVER}/allWishlists/${user?.email}`, { withCredentials: true })
                         .then(data => {
                             // console.log('from mail', data);
                             setItems(data.data);
                         })
                 }
                 else {
-                    await axios(`${import.meta.env.VITE_SERVER}/all_Wishlist/${user?.displayName}`,{ withCredentials: true })
+                    await axios(`${import.meta.env.VITE_SERVER}/all_Wishlist/${user?.displayName}`, { withCredentials: true })
                         .then(data => {
                             // console.log('from name', data.data);
                             setItems(data.data);
@@ -68,7 +69,7 @@ const Wishlist = () => {
                 //delete
                 fetch(`${import.meta.env.VITE_SERVER}/deleteWishlist/${id}`, {
                     method: 'DELETE',
-                    credentials: 'include', 
+                    credentials: 'include',
                 })
                     .then(res => res.json())
                     .then(data => {
@@ -119,6 +120,12 @@ const Wishlist = () => {
             <Helmet>
                 <title>Word Insight | Wishlist</title>
             </Helmet>
+
+            <AttentionSeeker effect='heartBeat' >
+                <h3 className="text-3xl font-serif text-center mb-8">
+                    Your ❤️ Wish List!
+                </h3>
+            </AttentionSeeker>
 
 
             <div className="overflow-x-auto my-12">

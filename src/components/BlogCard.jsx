@@ -49,7 +49,7 @@ const BlogCard = ({ Blog }) => {
                 }
 
                 const data = response.data;
-                console.log(data)
+                // console.log(data)
                 // setWishDetail(data);
                 // Check if the blog is present in the user's wishlist
                 setToggleBookmark(data.some(item => item.blogId === blogId));
@@ -70,7 +70,7 @@ const BlogCard = ({ Blog }) => {
                 //     setToggleBookmark(data.some(item => item.blogId === blogId));
                 // }
             } catch (error) {
-                console.error('Error fetching wishlist data:', error);
+                // console.error('Error fetching wishlist data:', error);
                 // toast.error(error.message, { autoClose: 2000, theme: "colored" });
             }
         };

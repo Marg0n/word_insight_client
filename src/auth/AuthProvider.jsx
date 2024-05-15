@@ -64,12 +64,29 @@ const AuthProvider = ({ children }) => {
         })
     };
 
-    // logout
-    const loggedOut = () => {
-        setLoading(true);
-        axios(`${import.meta.env.VITE_SERVER}/logout`,{withCredentials: true});
-        setUser(null);
-        return signOut(auth);
+    // logout onauthstatechange
+    const loggedOut = async() => {
+        // setLoading(true);
+        // await axios(`${import.meta.env.VITE_SERVER}/logout`,{withCredentials: true});
+        // setUser(null);
+        // return signOut(auth);
+        try {
+            setLoading(true);
+            const response = await axios.get(`${import.meta.env.VITE_SERVER}/logout`, {
+              withCredentials: true,
+            });
+        
+            if (response.data.success) {
+              setUser(null);
+              await signOut(auth);
+            } else {
+              console.error('Logout failed');
+            }
+          } catch (error) {
+            console.error('Error logging out:', error);
+          } finally {
+            setLoading(false);
+          }
     };
 
     // Observer
@@ -84,6 +101,7 @@ const AuthProvider = ({ children }) => {
         // cleanup function
         return () => {
             // setLoading(false);
+            // axios(`${import.meta.env.VITE_SERVER}/logout`,{withCredentials: true});
             return unsubscribe();
         }
     }, []);

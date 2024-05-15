@@ -3,10 +3,11 @@ import Loader from "../components/Loader";
 import { Helmet } from "react-helmet-async";
 import { useLoaderData } from "react-router-dom";
 import FeaturedComponent from "../components/FeaturedComponent";
+import { AttentionSeeker } from "react-awesome-reveal";
 
 const Featured = () => {
 
-    
+
     const allBlogs = useLoaderData();
 
 
@@ -17,7 +18,7 @@ const Featured = () => {
     // const sortedBlogs = [...allBlogs].sort((a, b) => a.long_description.length - b.long_description.length);
 
     // Select the first 10 blogs
-    const last10Blogs = sortedBlogs.slice( -10);
+    const last10Blogs = sortedBlogs.slice(-10);
     // const last10Blogs = sortedBlogs.slice(0, 10);
 
 
@@ -42,9 +43,12 @@ const Featured = () => {
                 <title>Word Insight | Featured</title>
             </Helmet>
 
-            <h3 className="text-center font-bold text-3xl font-serif">
-                Our top 10 Featured Blogs
-            </h3>
+            <AttentionSeeker effect='heartBeat' >
+                <h3 className="text-center font-bold text-3xl font-serif">
+                    Our top 10 Featured Blogs
+                </h3>
+            </AttentionSeeker>
+
 
             <div className="overflow-x-auto my-12">
                 <table className="table table-zebra border-2 border-base-300">
@@ -65,7 +69,7 @@ const Featured = () => {
                         {
                             last10Blogs.map((blog, index) => {
                                 return <FeaturedComponent key={index} blog={blog}
-                                index={index+1}/>
+                                    index={index + 1} />
                             })
                         }
 

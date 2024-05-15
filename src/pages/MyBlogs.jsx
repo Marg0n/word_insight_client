@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import axios from "axios";
 import { toast } from "react-toastify";
 import MyBlogsComponent from "../components/MyBlogsComponent";
+import { AttentionSeeker } from "react-awesome-reveal";
 
 const MyBlogs = () => {
 
@@ -21,14 +22,14 @@ const MyBlogs = () => {
         const getData = async () => {
             try {
                 if (user?.email) {
-                    await axios(`${import.meta.env.VITE_SERVER}/all_Blogs/${user?.email}`,{ withCredentials: true })
+                    await axios(`${import.meta.env.VITE_SERVER}/all_Blogs/${user?.email}`, { withCredentials: true })
                         .then(data => {
                             // console.log('from mail', data);
                             setItems(data.data);
                         })
                 }
                 else {
-                    await axios(`${import.meta.env.VITE_SERVER}/allBlog/${user?.displayName}`,{ withCredentials: true })
+                    await axios(`${import.meta.env.VITE_SERVER}/allBlog/${user?.displayName}`, { withCredentials: true })
                         .then(data => {
                             // console.log('from name', data.data);
                             setItems(data.data);
@@ -78,6 +79,12 @@ const MyBlogs = () => {
                 <title>Word Insight | Wishlist</title>
             </Helmet>
 
+            <AttentionSeeker effect='heartBeat' >
+                <h3 className="text-3xl font-serif text-center mb-8">
+                    My blogs!
+                </h3>
+            </AttentionSeeker>
+
 
             <div className="overflow-x-auto my-12">
                 <table className="table table-zebra border-2 border-base-300">
@@ -98,7 +105,7 @@ const MyBlogs = () => {
                         {
                             items.map((blog, index) => {
                                 return <MyBlogsComponent key={index} blog={blog}
-                                     />
+                                />
                             })
                         }
 
