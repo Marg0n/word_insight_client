@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
             {
                 path: "/allBlogs",
                 element: <AllBlogs />,
-                loader: () => fetch(`${import.meta.env.VITE_SERVER}/allBlogs`),
+                // loader: () => fetch(`${import.meta.env.VITE_SERVER}/allBlogs`),
 
             },
             {
