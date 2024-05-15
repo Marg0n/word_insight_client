@@ -65,9 +65,11 @@ const Home = () => {
             {/* recent 6 blogs */}
             <div className="my-16">
                 <div className="text-center my-6 space-y-4">
-                    <h3 className="text-3xl font-serif text-center">
-                        Check out some of the Recent Blogs!
-                    </h3>
+                    <AttentionSeeker effect='rubberBand' >
+                        <h3 className="text-3xl font-serif text-center">
+                            Check out some of the Recent Blogs!
+                        </h3>
+                    </AttentionSeeker>
                 </div>
 
                 <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 my-12 px-4">
@@ -83,9 +85,11 @@ const Home = () => {
             {/* newsletter */}
             <div className="my-16">
                 <div className="text-center my-6 space-y-4">
-                    <h3 className="text-3xl font-serif text-center">
-                        Subscribe for updates!
-                    </h3>
+                    <AttentionSeeker effect='headShake' >
+                        <h3 className="text-3xl font-serif text-center">
+                            Subscribe for updates!
+                        </h3>
+                    </AttentionSeeker>
                 </div>
 
                 <Newsletter />
@@ -94,9 +98,11 @@ const Home = () => {
             {/* slider */}
             <div className="my-16">
                 <div className="text-center my-6 space-y-4">
-                    <h3 className="text-3xl font-serif text-center">
-                        Have a look at our Featured Categories!
-                    </h3>
+                    <AttentionSeeker effect='jello' >
+                        <h3 className="text-3xl font-serif text-center">
+                            Have a look at our Featured Categories!
+                        </h3>
+                    </AttentionSeeker>
                     <p className="text-base">Take a look at some of our recommended featured Blogs!</p>
                 </div>
 
@@ -110,9 +116,12 @@ const Home = () => {
             {/* what to expect */}
             <div className="my-16">
                 <div className="text-center my-6 space-y-4">
-                    <h3 className="text-3xl font-serif text-center mb-8">
-                        People ❤️ Word Insight!
-                    </h3>
+                    <AttentionSeeker effect='heartBeat' >
+                        <h3 className="text-3xl font-serif text-center mb-8">
+                            People ❤️ Word Insight!
+                        </h3>
+                    </AttentionSeeker>
+
 
                     <Compliments />
                 </div>

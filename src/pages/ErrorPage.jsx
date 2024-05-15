@@ -34,7 +34,7 @@ const ErrorPage = () => {
                         <h1 className='text-error text-xl lg:text-3xl font-bold'>Oops!</h1>
                         <p className='text-error text-xl lg:text-3xl font-semibold'>Sorry, an unexpected error has occurred!</p>
                         <p className='text-error text-xl lg:text-3xl font-semibold'>
-                            Page: <i>{error.statusText || error.message}</i>
+                            <i>{error.status}</i> :  <i>{error.statusText || error.message}</i>
                         </p>
                         <Link
                             to='/'

@@ -22,14 +22,14 @@ const Wishlist = () => {
         const getData = async () => {
             try {
                 if (user?.email) {
-                    await axios(`${import.meta.env.VITE_SERVER}/allWishlists/${user?.email}`)
+                    await axios(`${import.meta.env.VITE_SERVER}/allWishlists/${user?.email}`,{ withCredentials: true })
                         .then(data => {
                             // console.log('from mail', data);
                             setItems(data.data);
                         })
                 }
                 else {
-                    await axios(`${import.meta.env.VITE_SERVER}/allWishlist/${user?.displayName}`)
+                    await axios(`${import.meta.env.VITE_SERVER}/all_Wishlist/${user?.displayName}`,{ withCredentials: true })
                         .then(data => {
                             // console.log('from name', data.data);
                             setItems(data.data);
@@ -68,6 +68,7 @@ const Wishlist = () => {
                 //delete
                 fetch(`${import.meta.env.VITE_SERVER}/deleteWishlist/${id}`, {
                     method: 'DELETE',
+                    credentials: 'include', 
                 })
                     .then(res => res.json())
                     .then(data => {

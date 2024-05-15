@@ -23,7 +23,7 @@ const EditBlog = () => {
 
     //get data to server
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_SERVER}/allBlogs/${id}`)
+        fetch(`${import.meta.env.VITE_SERVER}/allBlogs/${id}`,{ credentials: 'include' })
             .then((res) => res.json())
             .then(data => {
                 setEditBlog(data);

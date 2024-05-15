@@ -21,14 +21,14 @@ const MyBlogs = () => {
         const getData = async () => {
             try {
                 if (user?.email) {
-                    await axios(`${import.meta.env.VITE_SERVER}/all_Blogs/${user?.email}`)
+                    await axios(`${import.meta.env.VITE_SERVER}/all_Blogs/${user?.email}`,{ withCredentials: true })
                         .then(data => {
                             // console.log('from mail', data);
                             setItems(data.data);
                         })
                 }
                 else {
-                    await axios(`${import.meta.env.VITE_SERVER}/allBlog/${user?.displayName}`)
+                    await axios(`${import.meta.env.VITE_SERVER}/allBlog/${user?.displayName}`,{ withCredentials: true })
                         .then(data => {
                             // console.log('from name', data.data);
                             setItems(data.data);

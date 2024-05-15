@@ -65,10 +65,10 @@ export const router = createBrowserRouter([
                 path: "/wishlist",
                 element: <PrivateRoute><Wishlist /></PrivateRoute>,
             },
-            {
-                path: "/wishlist/:id",
-                element: <PrivateRoute><Wishlist /></PrivateRoute>,
-            },
+            // {
+            //     path: "/wishlist/:id",
+            //     element: <PrivateRoute><Wishlist /></PrivateRoute>,
+            // },
 
         ],
     },

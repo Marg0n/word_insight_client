@@ -1,12 +1,12 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
-import Loader from "../components/Loader";
-import useAuth from "../hooks/useAuth";
-import axios from "axios";
-import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { Tooltip } from "react-tooltip";
+import Swal from "sweetalert2";
+import Loader from "../components/Loader";
+import useAuth from "../hooks/useAuth";
 
 
 const BlogDetails = () => {
@@ -18,10 +18,9 @@ const BlogDetails = () => {
 
     // get all blogs data by id
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_SERVER}/allBlogs/${id}`)
-            .then((res) => res.json())
+        axios(`${import.meta.env.VITE_SERVER}/allBlogs/${id}`,{ withCredentials: true })
             .then(data => {
-                setBlogDetail(data);
+                setBlogDetail(data.data);
                 // console.log(data);
             })
     }, [id]);
@@ -39,24 +38,24 @@ const BlogDetails = () => {
         const getData = async () => {
             try {
                 if (user?.email) {
-                    const response = await axios(`${import.meta.env.VITE_SERVER}/all_Blogs/${user?.email}`);
+                    const response = await axios(`${import.meta.env.VITE_SERVER}/all_Blogs/${user?.email}`,{ withCredentials: true });
                     setLoadUserData(response.data);
                     // console.log('from mail', response.data);
                 }
                 else {
-                    const response = await axios(`${import.meta.env.VITE_SERVER}/allBlog/${user?.displayName}`);
+                    const response = await axios(`${import.meta.env.VITE_SERVER}/allBlog/${user?.displayName}`,{ withCredentials: true });
                     setLoadUserData(response.data);
                     // console.log('from name', data.data);
                 }
             }
             catch (err) {
                 // console.log(err)
-                toast.error(err.message, { autoClose: 2000, theme: "colored" });
+                // toast.error(err.message, { autoClose: 2000, theme: "colored" });
             }
         }
 
         getData();
-        
+
     }, [user?.displayName, user?.email]);
 
     // user info
@@ -71,27 +70,16 @@ const BlogDetails = () => {
     //get comments
     useEffect(() => {
         const getData = async () => {
-            const response = await axios(`${import.meta.env.VITE_SERVER}/getComments`)
+            const response = await axios(`${import.meta.env.VITE_SERVER}/getComments`,{ withCredentials: true })
             setGetComments(response.data);
             // console.log(response.data);
         }
 
         getData();
-        
+
     }, [getComments]);
 
-    // Filter comments based on postID
-    // const filteredComments = getComments.filter(com => com.postID === id);
-    // const filteredComments = getComments.filter(com => {
-    //     if(com.userEmail && com?.email) { return com.postID === id}
-    //     else { return com.userName === name} 
-    // });
-    // const filteredComments = Array.isArray(getComments) ? getComments.filter(comment => comment.postID === id) : [];
 
-
-
-    // console.log('comments', getComments)
-    // console.log('filtered comments', filteredComments)
 
     // comment adder
     const handleSubmit = (e) => {
@@ -155,15 +143,12 @@ const BlogDetails = () => {
             }
         }
         catch (err) {
-            // console.log(err)
+            console.log(err)
             toast.error(err.message, { autoClose: 2000, theme: "colored" });
         }
 
     }
 
-
-
-    // console.log(userName ,user?.displayName,userName === user?.displayName)
 
 
     // loader

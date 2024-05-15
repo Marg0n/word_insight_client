@@ -1,5 +1,7 @@
 import { PropTypes } from 'prop-types';
-import { useEffect, useState } from 'react';
+import { 
+    // useEffect, 
+    useMemo, useState } from 'react';
 import { GoBookmark, GoBookmarkFill } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -8,7 +10,7 @@ import Loader from './Loader';
 
 const RecentBlogs = ({ Blog }) => {
 
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
     const [toggleBookmark, setToggleBookmark] = useState(false);
 
 
@@ -31,17 +33,18 @@ const RecentBlogs = ({ Blog }) => {
         userMail, userName, blogId
     }
 
-    useEffect(() => {
+    // useEffect(() => {
+    useMemo(() => {
         const fetchData = async () => {
             try {
                 if (firebaseMail) {
-                    const response = await fetch(`${import.meta.env.VITE_SERVER}/allWishlists/${firebaseMail}`);
+                    const response = await fetch(`${import.meta.env.VITE_SERVER}/allWishlists/${firebaseMail}`,{ credentials: 'include' });
                     const data = await response.json();
 
                     // Check if the blog is present in the user's wishlist
                     setToggleBookmark(data.some(item => item.blogId === blogId));
                 } else {
-                    const response = await fetch(`${import.meta.env.VITE_SERVER}/allWishlist/${firebaseName}`);
+                    const response = await fetch(`${import.meta.env.VITE_SERVER}/all_Wishlist/${firebaseName}`,{ credentials: 'include' });
                     const data = await response.json();
 
                     // Check if the blog is present in the user's wishlist
@@ -49,12 +52,13 @@ const RecentBlogs = ({ Blog }) => {
                 }
             } catch (error) {
                 console.error('Error fetching wishlist data:', error);
-                toast.error(error.message, { autoClose: 2000, theme: "colored" });
+                // toast.error(error.message, { autoClose: 2000, theme: "colored" });
             }
         };
 
         fetchData();
-    }, [firebaseMail, firebaseName, _id, blogId]);
+    }, [user]);
+    // }, [firebaseMail, firebaseName, _id, blogId]);
 
     // Function to toggle bookmark
     const bookmark = () => {
@@ -68,6 +72,7 @@ const RecentBlogs = ({ Blog }) => {
             //send data to server
             fetch(`${import.meta.env.VITE_SERVER}/addWishlist`, {
                 method: 'POST',
+                credentials: 'include',
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify(wish),
             })
@@ -91,15 +96,15 @@ const RecentBlogs = ({ Blog }) => {
     };
 
     // loader
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 2000);
+    // useEffect(() => {
+    //     const timer = setTimeout(() => {
+    //         setLoading(false);
+    //     }, 2000);
 
-        return () => clearTimeout(timer);
-    }, []);
+    //     return () => clearTimeout(timer);
+    // }, []);
 
     if (loading) {
         return <Loader />

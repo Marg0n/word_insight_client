@@ -1,15 +1,18 @@
 
 import { PropTypes } from 'prop-types';
-import { useEffect, useState } from 'react';
+import { 
+    // useEffect,
+     useMemo, useState } from 'react';
 import { GoBookmark, GoBookmarkFill } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import useAuth from '../hooks/useAuth';
 import Loader from './Loader';
+import axios from 'axios';
 
 const BlogCard = ({ Blog }) => {
 
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
     const [toggleBookmark, setToggleBookmark] = useState(false);
     // const [wishDetail, setWishDetail] = useState({});
 
@@ -34,37 +37,52 @@ const BlogCard = ({ Blog }) => {
         userMail, userName, blogId
     }
 
-    useEffect(() => {
+    // useEffect(() => {
+    useMemo(() => {
         const fetchData = async () => {
             try {
+                let response;
                 if (firebaseMail) {
-                    const response = await fetch(`${import.meta.env.VITE_SERVER}/allWishlists/${firebaseMail}`);
-                    const data = await response.json();
-                    // setWishDetail(data);
-                    // Check if the blog is present in the user's wishlist
-                    setToggleBookmark(data.some(item => item.blogId === blogId));
+                    response = await axios.get(`${import.meta.env.VITE_SERVER}/allWishlists/${firebaseMail}`, { withCredentials: true });
                 } else {
-                    const response = await fetch(`${import.meta.env.VITE_SERVER}/allWishlist/${firebaseName}`);
-                    const data = await response.json();
-                    // setWishDetail(data);
-                    // Check if the blog is present in the user's wishlist
-                    setToggleBookmark(data.some(item => item.blogId === blogId));
+                    response = await axios.get(`${import.meta.env.VITE_SERVER}/all_Wishlist/${firebaseName}`, { withCredentials: true });
                 }
+
+                const data = response.data;
+                console.log(data)
+                // setWishDetail(data);
+                // Check if the blog is present in the user's wishlist
+                setToggleBookmark(data.some(item => item.blogId === blogId));
+
+                // if (firebaseMail) {
+                //     const response = await fetch(`${import.meta.env.VITE_SERVER}/allWishlists/${firebaseMail}`, { credentials: 'include' });
+                //     const data = await response.json();
+                //     console.log(data)
+                //     // setWishDetail(data);
+                //     // Check if the blog is present in the user's wishlist
+                //     setToggleBookmark(data.some(item => item.blogId === blogId));
+                // } else {
+                //     const response = await fetch(`${import.meta.env.VITE_SERVER}/all_Wishlist/${firebaseName}`, { credential: 'include' });
+                //     const data = await response.json();
+                //     console.log(data)
+                //     // setWishDetail(data);
+                //     // Check if the blog is present in the user's wishlist
+                //     setToggleBookmark(data.some(item => item.blogId === blogId));
+                // }
             } catch (error) {
                 console.error('Error fetching wishlist data:', error);
-                toast.error(error.message, { autoClose: 2000, theme: "colored" });
+                // toast.error(error.message, { autoClose: 2000, theme: "colored" });
             }
         };
 
         fetchData();
-    }, [firebaseMail, firebaseName, _id, blogId]);
+    }, [user]);
+    // }, [firebaseMail, firebaseName, _id, blogId]);
 
     // Function to toggle bookmark
     const bookmark = () => {
 
         // const userID =  user?.uid;
-
-
         if (!toggleBookmark) {
 
             if (!user) { return toast.info('Please Login', { autoClose: 2000, theme: "colored" }); }
@@ -123,15 +141,15 @@ const BlogCard = ({ Blog }) => {
     };
 
     // loader
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 2000);
+    // useEffect(() => {
+    //     const timer = setTimeout(() => {
+    //         setLoading(false);
+    //     }, 2000);
 
-        return () => clearTimeout(timer);
-    }, []);
+    //     return () => clearTimeout(timer);
+    // }, []);
 
     if (loading) {
         return <Loader />

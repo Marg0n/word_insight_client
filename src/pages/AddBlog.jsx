@@ -18,12 +18,12 @@ const AddBlog = () => {
         const getData = async () => {
             try {
                 if (user?.email) {
-                    const response = await axios(`${import.meta.env.VITE_SERVER}/all_Blogs/${user?.email}`);
+                    const response = await axios(`${import.meta.env.VITE_SERVER}/all_Blogs/${user?.email}`,{ withCredentials: true });
                     setLoadUserData(response.data);
                     // console.log('from mail', response.data);
                 }
                 else {
-                    const response = await axios(`${import.meta.env.VITE_SERVER}/allBlog/${user?.displayName}`);
+                    const response = await axios(`${import.meta.env.VITE_SERVER}/allBlog/${user?.displayName}`,{ withCredentials: true });
                     setLoadUserData(response.data);
                     // console.log('from name', data.data);
                 }

@@ -83,9 +83,9 @@ const Login = () => {
           },
             { withCredentials: true }
           )
-            .then(res => {
-              console.log(res.data)
-            })
+            // .then(res => {
+            //   console.log(res.data)
+            // })
           toast.success("Logged in successful!🎉", { autoClose: 2000, theme: "colored" })
           navigate(whereTo)
         }
