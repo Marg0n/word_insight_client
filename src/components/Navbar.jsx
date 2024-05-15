@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { useEffect, useState } from "react";
 import { GoPerson } from "react-icons/go";
 import { Link, NavLink } from "react-router-dom";
@@ -93,7 +94,23 @@ const Navbar = () => {
       {/* logo and website name */}
       <div className='flex-1'>
         <Link to="/" className='flex gap-2 items-center'>
-          <img className='w-auto h-7 rounded' src={logo} alt='' />
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ rotate: 180, scale: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 60,
+              duration: 2,
+              ease: "easeInOut",
+              times: [0, 0.2, 0.5, 0.8, 1],
+              repeat: Infinity,
+              repeatDelay: 1,
+              damping: 20
+            }}
+          >
+
+            <img className='w-auto h-7 rounded' src={logo} alt='' />
+          </motion.div>
           <span className='font-bold'>Word Insight</span>
         </Link>
       </div>
