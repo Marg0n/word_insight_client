@@ -30,6 +30,7 @@ Resources:
 - [react-toastify](https://www.npmjs.com/package/react-toastify)
 - [AXIOS](https://axios-http.com/docs/intro)
 - [JWT](https://jwt.io/libraries?language=Node.js)
+- [framer-motion](https://www.framer.com/motion/)
 
 
 
